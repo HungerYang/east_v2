@@ -104,7 +104,7 @@ def generator(train_data_path, input_size=512, batch_size=16, vis=False):
             img, label_maps, train_mask = dataset[idx]
             if vis:
                 visualize_label_maps(img, label_maps)
-            print('one sample has done!')
+            # print('one sample has done!')
 
             images.append(img.astype(np.float32))
             image_labels.append(label_maps[::4, ::4, :])
