@@ -28,7 +28,7 @@ moving_average_decay = 0.997
 gpu_list = '0,1'
 input_size = 512
 
-train_data_path = ''
+train_data_path = ['./demo_data.txt', ]
 
 # testing params.
 text_rescale = 512
