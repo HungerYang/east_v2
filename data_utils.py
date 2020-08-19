@@ -111,14 +111,14 @@ def generate_label_maps(im_size, text_polys, text_tags):
     angle_map = np.zeros((h, w), dtype=np.float32)
 
     for idx, (poly, tag) in enumerate(zip(text_polys.astype(np.int32), text_tags)):
-        poly_shrinked = [shrink_poly(poly).astype(np.int32)]
+        poly_shrinked = shrink_poly(poly).astype(np.int32)[np.newaxis, :, :]
         cv2.fillConvexPoly(score_map, poly_shrinked, 1)
         cv2.fillConvexPoly(poly_mask, poly_shrinked, idx + 1)
         # if the poly is too small, then ignore it during training.
         poly_h = min(np.linalg.norm(poly[0] - poly[3]), np.linalg.norm(poly[1] - poly[2]))
         poly_w = min(np.linalg.norm(poly[0] - poly[1]), np.linalg.norm(poly[2] - poly[3]))
         if min(poly_h, poly_w) < cfg.min_text_size or tag:
-            cv2.fillConvexPoly(training_mask, [poly.astype(np.int32)], 0)
+            cv2.fillConvexPoly(training_mask, poly.astype(np.int32)[np.newaxis, :, :], 0)
 
         rbox, rotate_angle = order_rotate_rectangle(poly)
         p0_rect, p1_rect, p2_rect, p3_rect = rbox
