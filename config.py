@@ -6,11 +6,12 @@
 
 # dataset params.
 min_area_not_validate = 20
+train_data_path = ['./demo_data.txt', ]
+max_crop_tries = 50
 
 # label params.
 shrink_ratio = 0.3
 min_text_size = 8
-
 
 # model params.
 checkpoint_path = './ckpts/'
@@ -27,8 +28,6 @@ max_steps = 100000
 moving_average_decay = 0.997
 gpu_list = '0,1'
 input_size = 512
-
-train_data_path = ['./demo_data.txt', ]
 
 # testing params.
 text_rescale = 512
