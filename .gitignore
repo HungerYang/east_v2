@@ -1,0 +1,13 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+eval/
+geo_map_cython_lib/
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+
