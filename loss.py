@@ -52,7 +52,7 @@ def ohem_batch(y_true_cls, y_pred_cls, training_mask):
         score = y_pred_cls[idx, :, :, :]
         mask = training_mask[idx, :, :, :]
         selected_masks.append(ohem_single(gt_text, score, mask))
-    selected_masks = tf.concat(selected_masks, axis=0)
+    selected_masks = tf.stack(selected_masks, axis=0)
     return tf.cast(selected_masks, dtype=tf.float32)
 
 

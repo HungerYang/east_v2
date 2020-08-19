@@ -141,7 +141,6 @@ def generate_label_maps(im_size, text_polys, text_tags):
             # angle
             angle_map[y, x] = rotate_angle
     label_maps = np.dstack((score_map.astype(np.float32), geo_map, angle_map))
-    print('label_maps/.shape', label_maps.shape)
     return label_maps, training_mask
 
 
