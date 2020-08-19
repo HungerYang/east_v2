@@ -6,7 +6,7 @@
 
 # dataset params.
 min_area_not_validate = 20
-train_data_path = ['./demo_data.txt', ]
+train_data_path = ['./train_data.txt', ]
 max_crop_tries = 50
 min_crop_side_ratio = 0.6
 
@@ -22,8 +22,8 @@ save_checkpoint_steps = 1000
 save_summary_steps = 100
 
 # training params.
-num_readers = 2
-batch_size_per_gpu = 2
+num_readers = 16
+batch_size_per_gpu = 16
 learning_rate = 0.0001
 max_steps = 1000
 moving_average_decay = 0.997
