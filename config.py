@@ -22,10 +22,10 @@ save_checkpoint_steps = 1000
 save_summary_steps = 100
 
 # training params.
-num_readers = 16
-batch_size_per_gpu = 14
+num_readers = 2
+batch_size_per_gpu = 2
 learning_rate = 0.0001
-max_steps = 100000
+max_steps = 1000
 moving_average_decay = 0.997
 gpu_list = '0,1'
 input_size = 512
