@@ -1,17 +1,25 @@
-## EAST算法改2.0
+## EAST_v2 (revised version)
+This code is revised from EAST, with some modifications, including data augmentation, ohem and so on. In post processing, a modified processing different from LANMS is implemented, 
+with better result and shorted post-processing time. 
 
-该代码在EAST源代码的基础上进行了修改，包括样本增强、OHEM损失等，同时对参数进行了调整，在后处理问题上直接替换了策略。
+### Major Modifications:
+- data enhancement, including horizontal flip, random rotation, mutli-scale, and transpose. 
+- hard negative pixel minining
+- much quicker geo map genneration, 
+- quicker post genenration of quadaraticals
+- post processing algorithms.
+ 
+More details can be found in codes.
 
-### 主要的改动包括：
-- 增加样本增强，包括左右翻转，10°以内旋转，多尺度变换，±90°旋转
-- OHEM难样本挖掘
-- label map尤其是geo map生成
-- 后处理中矩形框重新生成
-- 后处理中矩形框合并和挑选算法（全新）
+### How to use this code 
+Almost all params are configed in config.py, modify the corresponding params by your own setting.
 
-### 算法性能评测
-这里主要在京东自评数据集上测试，不在ICDAR官方数据集测评。Baseline为之前的EAST架构算法v1.0,其中也对后处理做了处理。
+ **Training:**
+ ```python multigpu_trian.py```
 
-
+**Testing:** 
+````python test.py````
+ 
+### More infomation
 
 
