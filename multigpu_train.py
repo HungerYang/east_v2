@@ -14,11 +14,11 @@ os.environ['CUDA_VISIBLE_DEVICES'] = cfg.gpu_list
 gpus = list(range(len(cfg.gpu_list.split(','))))
 
 
-def tower_loss(images, score_maps, geo_maps, training_masks, reuse_variables=None):
+def tower_loss(images, label_maps, training_masks, reuse_variables=None):
     # Build inference graph
     with tf.variable_scope(tf.get_variable_scope(), reuse=reuse_variables):
         f_score, f_geometry = model.model(images, is_training=True)
-
+    score_maps, geo_maps = tf.split(label_maps, num_or_size_splits=[1, 5])
     model_loss = loss.loss(score_maps, f_score, geo_maps, f_geometry, training_masks)
     total_loss = tf.add_n([model_loss] + tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES))
 
@@ -65,8 +65,7 @@ def main(argv=None):
             tf.gfile.MkDir(cfg.checkpoint_path)
 
     input_images = tf.placeholder(tf.float32, shape=[None, None, None, 3], name='input_images')
-    input_score_maps = tf.placeholder(tf.float32, shape=[None, None, None, 1], name='input_score_maps')
-    input_geo_maps = tf.placeholder(tf.float32, shape=[None, None, None, 5], name='input_geo_maps')
+    input_label_maps = tf.placeholder(tf.float32, shape=[None, None, None, 6], name='input_label_maps')
     input_training_masks = tf.placeholder(tf.float32, shape=[None, None, None, 1], name='input_training_masks')
 
     global_step = tf.get_variable('global_step', [], initializer=tf.constant_initializer(0), trainable=False)
@@ -79,8 +78,7 @@ def main(argv=None):
 
     # split
     input_images_split = tf.split(input_images, len(gpus))
-    input_score_maps_split = tf.split(input_score_maps, len(gpus))
-    input_geo_maps_split = tf.split(input_geo_maps, len(gpus))
+    input_label_maps_split = tf.split(input_label_maps, len(gpus))
     input_training_masks_split = tf.split(input_training_masks, len(gpus))
 
     tower_grads = []
@@ -89,8 +87,7 @@ def main(argv=None):
         with tf.device('/gpu:%d' % gpu_id):
             with tf.name_scope('model_%d' % gpu_id) as scope:
                 total_loss, model_loss = tower_loss(input_images_split[i],
-                                                    input_score_maps_split[i],
-                                                    input_geo_maps_split[i],
+                                                    input_label_maps_split[i],
                                                     input_training_masks_split[i],
                                                     reuse_variables)
                 batch_norm_updates_op = tf.group(*tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope))
@@ -137,9 +134,8 @@ def main(argv=None):
         for step in range(cfg.max_steps):
             data = next(data_generator)
             ml, tl, _ = sess.run([model_loss, total_loss, train_op], feed_dict={input_images: data[0],
-                                                                                input_score_maps: data[2],
-                                                                                input_geo_maps: data[3],
-                                                                                input_training_masks: data[4]})
+                                                                                input_label_maps: data[1],
+                                                                                input_training_masks: data[2]})
             if np.isnan(tl):
                 print('Loss diverged, stop training')
                 break
@@ -158,9 +154,8 @@ def main(argv=None):
             if step % cfg.save_summary_steps == 0:
                 _, tl, summary_str = sess.run([train_op, total_loss, summary_op],
                                               feed_dict={input_images: data[0],
-                                                         input_score_maps: data[2],
-                                                         input_geo_maps: data[3],
-                                                         input_training_masks: data[4]})
+                                                         input_label_maps: data[1],
+                                                         input_training_masks: data[2]})
                 summary_writer.add_summary(summary_str, global_step=step)
 
 
