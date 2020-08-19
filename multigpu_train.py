@@ -18,7 +18,7 @@ def tower_loss(images, label_maps, training_masks, reuse_variables=None):
     # Build inference graph
     with tf.variable_scope(tf.get_variable_scope(), reuse=reuse_variables):
         f_score, f_geometry = model.model(images, is_training=True)
-    score_maps, geo_maps = tf.split(label_maps, num_or_size_splits=[1, 5])
+    score_maps, geo_maps = tf.split(label_maps, num_or_size_splits=[1, 5], axis=-1)
     model_loss = loss.loss(score_maps, f_score, geo_maps, f_geometry, training_masks)
     total_loss = tf.add_n([model_loss] + tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES))
 
