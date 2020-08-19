@@ -29,7 +29,7 @@ def ohem_single(gt_text, score, mask):
     tt_pos_num = tf.reduce_sum(gt_text)
 
     pos_num = tt_pos_num - tf.reduce_sum(gt_text * mask)
-    neg_num = tf.cond(pos_num > 0, lambda: pos_num * 3, lambda: tf.constant(10000))
+    neg_num = tf.cond(pos_num > 0, lambda: pos_num * 3, lambda: tf.constant(10000.))
     max_neg_entries = tf.reduce_sum(1. - gt_text)
     neg_num = tf.minimum(neg_num, max_neg_entries)
     neg_conf = tf.boolean_mask(score, gt_text < 0.5)
