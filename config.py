@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Time  : 8/19/2020 3:41 PM
-# @Author: Yang Xuehang
-# @File  : config.py
 
 # dataset params.
 min_area_not_validate = 20

@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Time  : 8/19/2020 3:58 PM
-# @Author: Yang Xuehang
-# @File  : data_utils.py
-
 
 import numpy as np
 import config as cfg

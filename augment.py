@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Time  : 8/18/2020 2:54 PM
-# @Author: Yang Xuehang
-# @File  : augment.py
 
 import cv2
 import numpy as np

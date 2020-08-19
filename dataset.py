@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Time  : 8/19/2020 3:56 PM
-# @Author: Yang Xuehang
-# @File  : dataset.py
 
 import os
 import numpy as np
