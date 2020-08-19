@@ -181,7 +181,7 @@ class DataAugment(object):
             if h == th and w == tw:
                 return img, polys, tags
             # padding and crop
-            max_h_th, max_w_tw = np.max(h, w, th), np.max(h, w, tw)
+            max_h_th, max_w_tw = np.max([h, w, th]), np.max([h, w, tw])
             im_padded = np.zeros((max_h_th, max_w_tw, 3), dtype=np.uint8)
             im_padded[:h, :w, :] = img.copy()
             img = cv2.resize(im_padded, dsize=img_size)

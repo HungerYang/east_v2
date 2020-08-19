@@ -35,7 +35,7 @@ class ImageDataset(object):
         img_path, text_polys, text_tags = self.data_list[index]
         im = cv2.imread(img_path, 1)
         im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-        img, label_maps, training_mask = image_label(im, text_polys, text_tags, cfg.input_size)
+        img, label_maps, training_mask = image_label(im, text_polys, text_tags, cfg.input_size, cfg.shrink_ratio)
         return img, label_maps, training_mask
 
     def load_data(self, data_list: list) -> list:

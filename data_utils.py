@@ -144,7 +144,7 @@ def generate_label_maps(im_size, text_polys, text_tags):
     return label_maps, training_mask
 
 
-def image_label(im: np.ndarray, text_polys: np.ndarray, text_tags: list, input_size: int,
+def image_label(im: np.ndarray, text_polys: np.ndarray, text_tags: list, input_size: int, shrink_ratio: float = 0.3,
                 degrees: int = 10, scales: np.ndarray = np.array([0.5, 1., 2., 3.])) -> tuple:
     """
     Read Image and Generate Corresponding Label maps.
