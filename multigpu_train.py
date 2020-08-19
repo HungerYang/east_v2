@@ -129,7 +129,8 @@ def main(argv=None):
                                                                      ignore_missing_vars=True)
                 variable_restore_op(sess)
 
-        data_generator = dataset.get_batch(num_workers=cfg.num_readers,
+        data_generator = dataset.get_batch(train_data_path=cfg.train_data_path,
+                                           num_workers=cfg.num_readers,
                                            input_size=cfg.input_size,
                                            batch_size=cfg.batch_size_per_gpu * len(gpus))
         TM_BEGIN('step_time')
