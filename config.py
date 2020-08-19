@@ -8,6 +8,7 @@
 min_area_not_validate = 20
 train_data_path = ['./demo_data.txt', ]
 max_crop_tries = 50
+min_crop_side_ratio = 0.6
 
 # label params.
 shrink_ratio = 0.3
